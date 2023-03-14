@@ -18,9 +18,6 @@ import ru.malkollm.school_android.api.TodoAdapter
 import java.io.IOException
 
 class HomeFragment : Fragment() {
-    private var layoutManager: RecyclerView.LayoutManager? = null
-
-    //    private var todoAdapter: RecyclerView.Adapter<TodoAdapter.TodoViewHolder>? = null
     private lateinit var todoAdapter: TodoAdapter
 
     override fun onCreateView(
