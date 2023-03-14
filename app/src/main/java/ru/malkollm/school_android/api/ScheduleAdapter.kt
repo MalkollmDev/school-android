@@ -40,7 +40,7 @@ class ScheduleAdapter : RecyclerView.Adapter<ScheduleAdapter.TodoViewHolder>() {
     override fun onBindViewHolder(holder: ScheduleAdapter.TodoViewHolder, position: Int) {
         holder.binding.apply {
             val todo = todos[position]
-            tvTitleSchedule.text = todo.lessonItems[0].lessonName
+            tvNameLesson.text = todo.lessonItems[0].lessonName
         }
     }
 }
