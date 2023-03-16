@@ -13,7 +13,7 @@ class ScheduleAdapter : RecyclerView.Adapter<ScheduleAdapter.TodoViewHolder>() {
 
     private val diffCallback = object : DiffUtil.ItemCallback<LessonItem>(){
         override fun areItemsTheSame(oldItem: LessonItem, newItem: LessonItem): Boolean {
-            return oldItem.lessonName == newItem.lessonName
+            return oldItem.id == newItem.id
         }
 
         override fun areContentsTheSame(oldItem: LessonItem, newItem: LessonItem): Boolean {

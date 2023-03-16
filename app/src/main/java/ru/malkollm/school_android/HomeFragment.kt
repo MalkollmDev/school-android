@@ -1,5 +1,6 @@
 package ru.malkollm.school_android
 
+import android.content.ContentValues
 import android.content.ContentValues.TAG
 import android.os.Bundle
 import android.util.Log
@@ -7,18 +8,27 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import android.widget.AutoCompleteTextView
 import android.widget.ProgressBar
 import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import retrofit2.HttpException
 import ru.malkollm.school_android.api.RetrofitInstance
+import ru.malkollm.school_android.api.ScheduleAdapter
 import ru.malkollm.school_android.api.TodoAdapter
+import ru.malkollm.school_android.models.Group
 import java.io.IOException
 
 class HomeFragment : Fragment() {
-    private lateinit var todoAdapter: TodoAdapter
+    private lateinit var scheduleAdapter: ScheduleAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -30,36 +40,70 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val rvTodos = requireView().findViewById<RecyclerView>(R.id.rvSchedule)
-        val progressBar = requireView().findViewById<ProgressBar>(R.id.progressBar)
+        val rvSchedule = requireView().findViewById<RecyclerView>(R.id.rvSchedules)
+        val progressBar = requireView().findViewById<ProgressBar>(R.id.progressBarSchedule)
+        val actvGroup = requireView().findViewById<AutoCompleteTextView>(R.id.actvGroup)
 
-        setupRecyclerView(rvTodos)
+        setupRecyclerView(rvSchedule)
 
         lifecycleScope.launchWhenCreated {
             progressBar.isVisible = true
             val response = try {
-                RetrofitInstance.api.getTodos()
+                RetrofitInstance.apiGroups.getGroups()
             } catch (e: IOException) {
-                Log.e(TAG, "IOException, you might not have internet connection")
+                Log.e(ContentValues.TAG, "IOException, you might not have internet connection")
                 progressBar.isVisible = false
                 return@launchWhenCreated
             } catch (e: HttpException) {
-                Log.e(TAG, "HttpException, unexpected response")
+                Log.e(ContentValues.TAG, "HttpException, unexpected response")
                 progressBar.isVisible = false
                 return@launchWhenCreated
             }
             if (response.isSuccessful && response.body() != null) {
-                todoAdapter.todos = response.body()!!
-            } else {
-                Log.e(TAG, "Response not successful")
+                val groupsNumberList: ArrayList<Int> = arrayListOf()
+                var groupsNumber: ArrayList<Group> = arrayListOf()
+                groupsNumber = (response.body() as ArrayList<Group>?)!!
+                for (group in groupsNumber) {
+                    groupsNumberList.add(group.number)
+                }
+
+                val arrayAdapter =
+                    ArrayAdapter(requireContext(), R.layout.dropdown_groups_item, groupsNumberList)
+                actvGroup.setAdapter(arrayAdapter)
+
+                actvGroup.onItemClickListener = object : AdapterView.OnItemSelectedListener,
+                    AdapterView.OnItemClickListener {
+                    override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+                        TODO("Not yet implemented")
+                    }
+
+                    override fun onNothingSelected(p0: AdapterView<*>?) {
+                        TODO("Not yet implemented")
+                    }
+
+                    override fun onItemClick(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+                        CoroutineScope(Dispatchers.IO).launch {
+                            val response1 =
+                                RetrofitInstance.apiGroupSchedule.getGroupSchedule(groupsNumber[p2].id)
+
+                            withContext(Dispatchers.Main) {
+                                if (response1.isSuccessful) {
+                                    scheduleAdapter.todos = response1.body()!!
+                                    progressBar.isVisible = false
+                                } else {
+                                    Log.e("RETROFIT_ERROR", response.code().toString())
+                                }
+                            }
+                        }
+                    }
+                }
             }
-            progressBar.isVisible = false
         }
     }
 
-    private fun setupRecyclerView(rvTodos: RecyclerView) = rvTodos.apply {
-        todoAdapter = TodoAdapter()
-        adapter = todoAdapter
+    private fun setupRecyclerView(rvSchedule: RecyclerView) = rvSchedule.apply {
+        scheduleAdapter = ScheduleAdapter()
+        adapter = scheduleAdapter
         layoutManager = LinearLayoutManager(activity)
     }
 }

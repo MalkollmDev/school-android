@@ -44,4 +44,12 @@ object RetrofitInstance {
             .build()
             .create(GroupScheduleApi::class.java)
     }
+
+    val apiHomework: HomeworkApi by lazy {
+        Retrofit.Builder()
+            .baseUrl("http://api.malkollm.ru/")
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+            .create(HomeworkApi::class.java)
+    }
 }

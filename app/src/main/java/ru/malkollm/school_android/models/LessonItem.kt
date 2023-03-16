@@ -1,6 +1,7 @@
 package ru.malkollm.school_android.models
 
 data class LessonItem(
+    val id: Int,
     val email: Any,
     val firstName: String,
     val isReady: Boolean,
