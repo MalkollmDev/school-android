@@ -3,7 +3,7 @@
 
     <item android:title="Расписание"
         android:id="@+id/home"
-        android:icon="@drawable/ic_home" />
+        android:icon="@drawable/ic_schedule" />
     <item android:title="Домашние задания"
         android:id="@+id/homework"
         android:icon="@drawable/ic_homework" />

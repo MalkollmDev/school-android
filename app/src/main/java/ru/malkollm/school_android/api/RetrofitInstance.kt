@@ -2,10 +2,7 @@ package ru.malkollm.school_android.api
 
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import ru.malkollm.school_android.api.interfaces.GroupApi
-import ru.malkollm.school_android.api.interfaces.LessonApi
-import ru.malkollm.school_android.api.interfaces.ScheduleApi
-import ru.malkollm.school_android.api.interfaces.TodoApi
+import ru.malkollm.school_android.api.interfaces.*
 
 object RetrofitInstance {
     val api: TodoApi by lazy {
@@ -38,5 +35,13 @@ object RetrofitInstance {
             .addConverterFactory(GsonConverterFactory.create())
             .build()
             .create(GroupApi::class.java)
+    }
+
+    val apiGroupSchedule: GroupScheduleApi by lazy {
+        Retrofit.Builder()
+            .baseUrl("http://api.malkollm.ru/")
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+            .create(GroupScheduleApi::class.java)
     }
 }

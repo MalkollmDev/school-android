@@ -5,14 +5,13 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="8dp"
-
     android:elevation="0dp"
     app:cardCornerRadius="8dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/orange"
+        android:background="@color/purple"
         android:padding="5dp">
 
         <TextView
@@ -35,35 +34,35 @@
             android:layout_marginStart="20dp"
             android:layout_marginTop="4dp"
             android:text="Алгебра"
-            android:textSize="25sp"
+            android:textSize="22sp"
             android:textStyle="bold"
             app:layout_constraintStart_toEndOf="@+id/tvNumber"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/tvHomework"
+            android:id="@+id/tvTeacher"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:layout_marginTop="8dp"
             android:text="Выучить Библию наизусть"
-            android:textSize="20sp"
+            android:textSize="17sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/tvNumber"
             app:layout_constraintTop_toBottomOf="@+id/tvNameLesson"
             app:layout_constraintVertical_bias="0.0" />
 
         <TextView
-            android:id="@+id/tvHomeworkDate"
+            android:id="@+id/tvLessonTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:layout_marginTop="8dp"
-            android:text="Сделать до пятницы"
+            android:text="08:00-08:45"
             android:textSize="15sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/tvNumber"
-            app:layout_constraintTop_toBottomOf="@+id/tvHomework"
+            app:layout_constraintTop_toBottomOf="@+id/tvTeacher"
             app:layout_constraintVertical_bias="0.5" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

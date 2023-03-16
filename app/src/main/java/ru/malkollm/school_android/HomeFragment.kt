@@ -30,7 +30,7 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val rvTodos = requireView().findViewById<RecyclerView>(R.id.rvTodos)
+        val rvTodos = requireView().findViewById<RecyclerView>(R.id.rvSchedule)
         val progressBar = requireView().findViewById<ProgressBar>(R.id.progressBar)
 
         setupRecyclerView(rvTodos)
