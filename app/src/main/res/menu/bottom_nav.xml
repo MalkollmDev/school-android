@@ -7,7 +7,7 @@
     <item android:title="Домашние задания"
         android:id="@+id/homework"
         android:icon="@drawable/ic_homework" />
-    <item android:title="Настройки"
-        android:id="@+id/settings"
-        android:icon="@drawable/ic_settings" />
+<!--    <item android:title="Настройки"-->
+<!--        android:id="@+id/settings"-->
+<!--        android:icon="@drawable/ic_settings" />-->
 </menu>

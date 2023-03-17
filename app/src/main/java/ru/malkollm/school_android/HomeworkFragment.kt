@@ -10,6 +10,7 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import android.widget.ProgressBar
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -27,6 +28,8 @@ import java.io.IOException
 
 class HomeworkFragment : Fragment() {
     private lateinit var homeworkAdapter: HomeworkAdapter
+    private lateinit var selectedGroup: Group
+    private lateinit var lessons: ArrayList<LessonItem>
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -44,6 +47,8 @@ class HomeworkFragment : Fragment() {
             requireView().findViewById<AutoCompleteTextView>(R.id.actvGroupHomework)
         val actvLessonHomework =
             requireView().findViewById<AutoCompleteTextView>(R.id.actvLessonHomework)
+
+        setupRecyclerView(rvHomework)
 
         lifecycleScope.launchWhenCreated {
             val response = try {
@@ -79,13 +84,13 @@ class HomeworkFragment : Fragment() {
 
                     override fun onItemClick(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
                         CoroutineScope(Dispatchers.IO).launch {
+                            selectedGroup = groupsNumber[p2]
                             val response1 =
-                                RetrofitInstance.apiGroupSchedule.getGroupSchedule(groupsNumber[p2].id)
+                                RetrofitInstance.apiGroupSchedule.getGroupSchedule(selectedGroup.id)
 
                             withContext(Dispatchers.Main) {
                                 if (response1.isSuccessful) {
                                     val lessonList: ArrayList<String> = arrayListOf()
-                                    var lessons: ArrayList<LessonItem> = arrayListOf()
                                     lessons = (response1.body() as ArrayList<LessonItem>?)!!
                                     for (lesson in lessons) {
                                         lessonList.add(lesson.lessonName)
@@ -104,6 +109,36 @@ class HomeworkFragment : Fragment() {
                         }
                     }
                 }
+
+
+                actvLessonHomework.onItemClickListener = object : AdapterView.OnItemSelectedListener,
+                    AdapterView.OnItemClickListener {
+                    override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+                        TODO("Not yet implemented")
+                    }
+
+                    override fun onNothingSelected(p0: AdapterView<*>?) {
+                        TODO("Not yet implemented")
+                    }
+
+                    override fun onItemClick(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+                        CoroutineScope(Dispatchers.IO).launch {
+
+                            val response2 =
+                                RetrofitInstance.apiHomework.getHomeworks(selectedGroup.id, lessons[p2].id)
+
+                            withContext(Dispatchers.Main) {
+                                if (response2.isSuccessful) {
+                                    homeworkAdapter.todos = response2.body()!!
+                                    progressBarHomework.isVisible = false
+                                } else {
+                                    Log.e("RETROFIT_ERROR", response.code().toString())
+                                }
+                            }
+                        }
+                    }
+                }
+
             } else {
                 Log.e(ContentValues.TAG, "Response not successful")
             }

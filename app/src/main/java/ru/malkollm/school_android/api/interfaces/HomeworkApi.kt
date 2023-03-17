@@ -6,7 +6,7 @@ import retrofit2.http.Path
 import ru.malkollm.school_android.models.Homework
 
 interface HomeworkApi {
-    @GET("GetHomeworkByGroupLesson/{groupId}/{lessonId}")
+    @GET("Homeworks/GetHomeworkByGroupLesson/{groupId}/{lessonId}")
     suspend fun getHomeworks(
         @Path("groupId") groupId: Int,
         @Path("lessonId") lessonId: Int

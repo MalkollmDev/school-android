@@ -60,6 +60,7 @@ class HomeFragment : Fragment() {
                 return@launchWhenCreated
             }
             if (response.isSuccessful && response.body() != null) {
+                progressBar.isVisible = false
                 val groupsNumberList: ArrayList<Int> = arrayListOf()
                 var groupsNumber: ArrayList<Group> = arrayListOf()
                 groupsNumber = (response.body() as ArrayList<Group>?)!!

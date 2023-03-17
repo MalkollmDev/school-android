@@ -18,7 +18,7 @@ class MainActivity : AppCompatActivity() {
             when(it.itemId){
                 R.id.home -> replaceFragment(HomeFragment())
                 R.id.homework -> replaceFragment(HomeworkFragment())
-                R.id.settings -> replaceFragment(SettingsFragment())
+//                R.id.settings -> replaceFragment(SettingsFragment())
 
                 else -> {}
             }
