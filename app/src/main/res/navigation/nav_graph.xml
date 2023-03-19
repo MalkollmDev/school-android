@@ -10,7 +10,6 @@
         android:name="ru.malkollm.school_android.FirstFragment"
         android:label="@string/first_fragment_label"
         tools:layout="@layout/fragment_first" >
-
         <action
             android:id="@+id/action_FirstFragment_to_SecondFragment"
             app:destination="@id/SecondFragment" />
@@ -20,9 +19,31 @@
         android:name="ru.malkollm.school_android.SecondFragment"
         android:label="@string/second_fragment_label"
         tools:layout="@layout/fragment_second" >
-
+        <argument
+            android:name="GroupId"
+            app:argType="integer"
+            android:defaultValue="0" />
         <action
-            android:id="@+id/action_SecondFragment_to_FirstFragment"
-            app:destination="@id/FirstFragment" />
+            android:id="@+id/action_SecondFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="ru.malkollm.school_android.HomeFragment"
+        android:label="fragment_home"
+        tools:layout="@layout/fragment_home" >
+        <argument
+            android:name="GroupId"
+            app:argType="integer" />
+    </fragment>
+    <activity
+        android:id="@+id/mainActivity"
+        android:name="ru.malkollm.school_android.MainActivity"
+        android:label="activity_main"
+        tools:layout="@layout/activity_main" >
+        <argument
+            android:name="GroupId"
+            app:argType="integer"
+            android:defaultValue="0" />
+    </activity>
 </navigation>

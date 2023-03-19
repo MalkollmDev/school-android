@@ -11,6 +11,7 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -25,25 +26,16 @@ import ru.malkollm.school_android.databinding.FragmentFirstBinding
 import ru.malkollm.school_android.models.Group
 import java.io.IOException
 
-/**
- * A simple [Fragment] subclass as the default destination in the navigation.
- */
 class FirstFragment : Fragment() {
-
     private var _binding: FragmentFirstBinding? = null
-
-    // This property is only valid between onCreateView and
-    // onDestroyView.
     private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
         _binding = FragmentFirstBinding.inflate(inflater, container, false)
         return binding.root
-
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -71,12 +63,17 @@ class FirstFragment : Fragment() {
                 for (user in response.body()!!) {
                     binding.btnLogin.setOnClickListener {
                         if (
-                            tvLogin.text.toString() == user.login &&
-                            tvPassword.text.toString() == user.password
+                            tvLogin.text.toString().trim() == user.login &&
+                            tvPassword.text.toString().trim() == user.password
                         ) {
-                            findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
+                            val bundle = bundleOf("GroupId" to user.groupId)
+                            findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment, bundle)
                         } else {
-                            Toast.makeText(activity, "Ошибка авторизации, проверьте логин и пароль", Toast.LENGTH_LONG).show()
+                            Toast.makeText(
+                                activity,
+                                "Ошибка авторизации, проверьте логин и пароль",
+                                Toast.LENGTH_LONG
+                            ).show()
                             tvLogin.text.clear()
                         }
                     }
