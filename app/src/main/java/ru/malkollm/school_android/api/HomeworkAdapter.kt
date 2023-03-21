@@ -6,11 +6,10 @@ import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import ru.malkollm.school_android.databinding.ItemHomeworkBinding
-import ru.malkollm.school_android.databinding.ItemLessonBinding
 import ru.malkollm.school_android.models.Homework
 
-class HomeworkAdapter : RecyclerView.Adapter<HomeworkAdapter.TodoViewHolder>() {
-    inner class TodoViewHolder(val binding: ItemHomeworkBinding) : RecyclerView.ViewHolder(binding.root)
+class HomeworkAdapter : RecyclerView.Adapter<HomeworkAdapter.HomeworkViewHolder>() {
+    inner class HomeworkViewHolder(val binding: ItemHomeworkBinding) : RecyclerView.ViewHolder(binding.root)
 
     private val diffCallback = object : DiffUtil.ItemCallback<Homework>(){
         override fun areItemsTheSame(oldItem: Homework, newItem: Homework): Boolean {
@@ -29,15 +28,15 @@ class HomeworkAdapter : RecyclerView.Adapter<HomeworkAdapter.TodoViewHolder>() {
 
     override fun getItemCount() = todos.size
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TodoViewHolder {
-        return TodoViewHolder(ItemHomeworkBinding.inflate(
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HomeworkViewHolder {
+        return HomeworkViewHolder(ItemHomeworkBinding.inflate(
             LayoutInflater.from(parent.context),
             parent,
             false
         ))
     }
 
-    override fun onBindViewHolder(holder: TodoViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: HomeworkViewHolder, position: Int) {
         holder.binding.apply {
             val todo = todos[position]
             tvNLessonHomework.text = todo.lessonName

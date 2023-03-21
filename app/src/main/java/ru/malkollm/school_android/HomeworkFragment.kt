@@ -22,14 +22,13 @@ import kotlinx.coroutines.withContext
 import retrofit2.HttpException
 import ru.malkollm.school_android.api.HomeworkAdapter
 import ru.malkollm.school_android.api.RetrofitInstance
-import ru.malkollm.school_android.models.Group
-import ru.malkollm.school_android.models.LessonItem
+import ru.malkollm.school_android.models.Lesson
 import ru.malkollm.school_android.models.User
 import java.io.IOException
 
 class HomeworkFragment(private var user: User) : Fragment() {
     private lateinit var homeworkAdapter: HomeworkAdapter
-    private lateinit var lessons: ArrayList<LessonItem>
+    private lateinit var lessons: ArrayList<Lesson>
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -60,7 +59,7 @@ class HomeworkFragment(private var user: User) : Fragment() {
             }
             if (response.isSuccessful && response.body() != null) {
                 val lessonList: ArrayList<String> = arrayListOf()
-                lessons = (response.body() as ArrayList<LessonItem>?)!!
+                lessons = (response.body() as ArrayList<Lesson>?)!!
                 for (lesson in lessons) {
                     lessonList.add(lesson.lessonName)
                 }

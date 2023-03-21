@@ -1,16 +1,15 @@
 package ru.malkollm.school_android
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import ru.malkollm.school_android.databinding.FragmentSecondBinding
 import ru.malkollm.school_android.models.User
 
 class SecondFragment : Fragment() {
-
     private var _binding: FragmentSecondBinding? = null
     private val binding get() = _binding!!
     private lateinit var user: User
@@ -18,7 +17,7 @@ class SecondFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentSecondBinding.inflate(inflater, container, false)
 
         arguments?.let { bundle ->
@@ -42,14 +41,6 @@ class SecondFragment : Fragment() {
 
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-//        binding.buttonSecond.setOnClickListener {
-////            findNavController().navigate(R.id.action_SecondFragment_to_FirstFragment)
-//        }
-    }
-
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
@@ -58,7 +49,7 @@ class SecondFragment : Fragment() {
     private fun replaceFragment(fragment: Fragment) {
         val fragmentManager = (activity as FragmentActivity).supportFragmentManager
         val fragmentTransaction = fragmentManager.beginTransaction()
-        fragmentTransaction.replace(R.id.frame_layout, fragment, )
+        fragmentTransaction.replace(R.id.frame_layout, fragment)
         fragmentTransaction.commit()
     }
 }

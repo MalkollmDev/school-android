@@ -6,30 +6,30 @@ import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import ru.malkollm.school_android.databinding.ItemScheduleBinding
-import ru.malkollm.school_android.models.LessonItem
+import ru.malkollm.school_android.models.Lesson
 
-class ScheduleAdapter : RecyclerView.Adapter<ScheduleAdapter.TodoViewHolder>() {
-    inner class TodoViewHolder(val binding: ItemScheduleBinding) : RecyclerView.ViewHolder(binding.root)
+class ScheduleAdapter : RecyclerView.Adapter<ScheduleAdapter.ScheduleViewHolder>() {
+    inner class ScheduleViewHolder(val binding: ItemScheduleBinding) : RecyclerView.ViewHolder(binding.root)
 
-    private val diffCallback = object : DiffUtil.ItemCallback<LessonItem>(){
-        override fun areItemsTheSame(oldItem: LessonItem, newItem: LessonItem): Boolean {
+    private val diffCallback = object : DiffUtil.ItemCallback<Lesson>(){
+        override fun areItemsTheSame(oldItem: Lesson, newItem: Lesson): Boolean {
             return oldItem.id == newItem.id
         }
 
-        override fun areContentsTheSame(oldItem: LessonItem, newItem: LessonItem): Boolean {
+        override fun areContentsTheSame(oldItem: Lesson, newItem: Lesson): Boolean {
             return oldItem == newItem
         }
     }
 
     private val differ = AsyncListDiffer(this, diffCallback)
-    var todos: List<LessonItem>
+    var todos: List<Lesson>
         get() = differ.currentList
         set(value) {differ.submitList(value)}
 
     override fun getItemCount() = todos.size
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ScheduleAdapter.TodoViewHolder {
-        return TodoViewHolder(
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ScheduleAdapter.ScheduleViewHolder {
+        return ScheduleViewHolder(
             ItemScheduleBinding.inflate(
             LayoutInflater.from(parent.context),
             parent,
@@ -37,7 +37,7 @@ class ScheduleAdapter : RecyclerView.Adapter<ScheduleAdapter.TodoViewHolder>() {
         ))
     }
 
-    override fun onBindViewHolder(holder: ScheduleAdapter.TodoViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ScheduleAdapter.ScheduleViewHolder, position: Int) {
         holder.binding.apply {
             val todo = todos[position]
             val numberInc = position + 1
