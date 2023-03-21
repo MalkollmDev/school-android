@@ -7,23 +7,18 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
-import android.widget.TextView
 import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.RecyclerView
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.RequestBody.Companion.toRequestBody
+import org.json.JSONObject
 import retrofit2.HttpException
 import ru.malkollm.school_android.api.RetrofitInstance
 import ru.malkollm.school_android.databinding.FragmentFirstBinding
-import ru.malkollm.school_android.models.Group
+import ru.malkollm.school_android.models.User
 import java.io.IOException
 
 class FirstFragment : Fragment() {
@@ -45,41 +40,60 @@ class FirstFragment : Fragment() {
         val tvPassword = binding.tvPassword
         val progressBarLogin = binding.progressBarLogin
 
-        lifecycleScope.launchWhenCreated {
-            progressBarLogin.isVisible = true
-            val response = try {
-                RetrofitInstance.apiUser.getUsers()
-            } catch (e: IOException) {
-                Log.e(ContentValues.TAG, "IOException, you might not have internet connection")
-                progressBarLogin.isVisible = false
-                return@launchWhenCreated
-            } catch (e: HttpException) {
-                Log.e(ContentValues.TAG, "HttpException, unexpected response")
-                progressBarLogin.isVisible = false
-                return@launchWhenCreated
-            }
-            if (response.isSuccessful && response.body() != null) {
-                progressBarLogin.isVisible = false
+        binding.btnLogin.setOnClickListener {
+            val login = tvLogin.text.toString().trim()
+            val password = tvPassword.text.toString().trim()
 
-                binding.btnLogin.setOnClickListener {
-                    for (user in response.body()!!) {
-                        if (
-                            tvLogin.text.toString().trim() == user.login &&
-                            tvPassword.text.toString().trim() == user.password
-                        ) {
-                            val bundle = bundleOf("User" to user)
-                            findNavController().navigate(
-                                R.id.action_FirstFragment_to_SecondFragment,
-                                bundle
-                            )
-                        } else {
-                            Toast.makeText(
-                                activity,
-                                "Ошибка авторизации, проверьте логин и пароль",
-                                Toast.LENGTH_LONG
-                            ).show()
-                            tvPassword.text.clear()
-                        }
+//            val jsonObject = JSONObject()
+//            jsonObject.put("login", login)
+//            jsonObject.put("password", password)
+//
+//            val jsonObjectString = jsonObject.toString()
+//            val requestBody = jsonObjectString.toRequestBody("application/json".toMediaTypeOrNull())
+
+            val model = User(
+                email = "",
+                firstName = "",
+                groupId = 0,
+                id = 0,
+                lastName = "",
+                login = login,
+                middleName = "",
+                password = password,
+                phone = "",
+                roleId = 0
+            )
+
+            lifecycleScope.launchWhenCreated {
+                progressBarLogin.isVisible = true
+                val response = try {
+                    RetrofitInstance.apiUser.checkUser(model)
+                } catch (e: IOException) {
+                    Log.e(ContentValues.TAG, "IOException, you might not have internet connection")
+                    progressBarLogin.isVisible = false
+                    return@launchWhenCreated
+                } catch (e: HttpException) {
+                    Log.e(ContentValues.TAG, "HttpException, unexpected response")
+                    progressBarLogin.isVisible = false
+                    return@launchWhenCreated
+                }
+                if (response.isSuccessful && response.body() != null) {
+                    progressBarLogin.isVisible = false
+
+                    val user = response.body()!!
+                    if (user.isNotEmpty()) {
+                        val bundle = bundleOf("User" to user[0])
+                        findNavController().navigate(
+                            R.id.action_FirstFragment_to_SecondFragment,
+                            bundle
+                        )
+                    } else {
+                        Toast.makeText(
+                            activity,
+                            "Ошибка авторизации, проверьте логин и пароль",
+                            Toast.LENGTH_LONG
+                        ).show()
+                        tvPassword.text.clear()
                     }
                 }
             }

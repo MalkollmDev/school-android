@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AutoCompleteTextView
 import android.widget.ProgressBar
+import android.widget.TextView
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
@@ -36,14 +37,12 @@ class HomeFragment(private var user: User) : Fragment() {
 
         val rvSchedule = requireView().findViewById<RecyclerView>(R.id.rvSchedules)
         val progressBar = requireView().findViewById<ProgressBar>(R.id.progressBarSchedule)
-        val coordinatorSchedule = requireView().findViewById<CoordinatorLayout>(R.id.coordinatorSchedule)
-        val actvGroup = requireView().findViewById<AutoCompleteTextView>(R.id.actvGroup)
+        val tvNumberGroup = requireView().findViewById<TextView>(R.id.tvNumberGroup)
 
         setupRecyclerView(rvSchedule)
 
         if (user.roleId == 1 || user.roleId == 2 || user.roleId == 5 || user.roleId == 6) {
             lifecycleScope.launchWhenCreated {
-                coordinatorSchedule.visibility = 1
                 progressBar.isVisible = true
                 val response = try {
                     RetrofitInstance.apiGroupSchedule.getSchedule()
@@ -57,6 +56,7 @@ class HomeFragment(private var user: User) : Fragment() {
                     return@launchWhenCreated
                 }
                 if (response.isSuccessful && response.body() != null) {
+                    tvNumberGroup.text = "Администратор"
                     progressBar.isVisible = false
                     scheduleAdapter.todos = response.body()!!
                     progressBar.isVisible = false
@@ -64,7 +64,6 @@ class HomeFragment(private var user: User) : Fragment() {
             }
         } else {
             lifecycleScope.launchWhenCreated {
-                coordinatorSchedule.visibility = 0
                 progressBar.isVisible = true
                 val response = try {
                     RetrofitInstance.apiGroupSchedule.getGroupSchedule(user.groupId)
@@ -78,6 +77,8 @@ class HomeFragment(private var user: User) : Fragment() {
                     return@launchWhenCreated
                 }
                 if (response.isSuccessful && response.body() != null) {
+                    val group = user.groupId.toString() + " класс"
+                    tvNumberGroup.text = group
                     progressBar.isVisible = false
                     scheduleAdapter.todos = response.body()!!
                     progressBar.isVisible = false
