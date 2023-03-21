@@ -10,4 +10,8 @@ interface GroupScheduleApi {
     suspend fun getGroupSchedule(
         @Path("id") id: Int
     ): Response<List<LessonItem>>
+
+    @GET("Lessons/GetSchedule")
+    suspend fun getSchedule(
+    ): Response<List<LessonItem>>
 }

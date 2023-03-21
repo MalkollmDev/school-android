@@ -7,12 +7,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.FragmentActivity
 import ru.malkollm.school_android.databinding.FragmentSecondBinding
+import ru.malkollm.school_android.models.User
 
 class SecondFragment : Fragment() {
 
     private var _binding: FragmentSecondBinding? = null
     private val binding get() = _binding!!
-    private var groupId: Int = 0
+    private lateinit var user: User
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -21,14 +22,14 @@ class SecondFragment : Fragment() {
         _binding = FragmentSecondBinding.inflate(inflater, container, false)
 
         arguments?.let { bundle ->
-            groupId = bundle.getInt("GroupId")
+            user = bundle.getParcelable("User")!!
         }
 
-        replaceFragment(HomeFragment(groupId))
+        replaceFragment(HomeFragment(user))
 
         binding.bottomNavigationView.setOnItemSelectedListener {
             when (it.itemId) {
-                R.id.home -> replaceFragment(HomeFragment(groupId))
+                R.id.home -> replaceFragment(HomeFragment(user))
                 R.id.homework -> replaceFragment(HomeworkFragment())
 //                R.id.settings -> replaceFragment(SettingsFragment())
 

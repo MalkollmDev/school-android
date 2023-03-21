@@ -13,19 +13,21 @@
         <action
             android:id="@+id/action_FirstFragment_to_SecondFragment"
             app:destination="@id/SecondFragment" />
+        <action
+            android:id="@+id/action_FirstFragment_to_adminFragment"
+            app:destination="@id/adminFragment" />
     </fragment>
     <fragment
         android:id="@+id/SecondFragment"
         android:name="ru.malkollm.school_android.SecondFragment"
         android:label="@string/second_fragment_label"
         tools:layout="@layout/fragment_second" >
-        <argument
-            android:name="GroupId"
-            app:argType="integer"
-            android:defaultValue="0" />
         <action
             android:id="@+id/action_SecondFragment_to_homeFragment"
             app:destination="@id/homeFragment" />
+        <argument
+            android:name="User"
+            app:argType="ru.malkollm.school_android.models.User" />
     </fragment>
     <fragment
         android:id="@+id/homeFragment"
@@ -46,4 +48,13 @@
             app:argType="integer"
             android:defaultValue="0" />
     </activity>
+    <fragment
+        android:id="@+id/adminFragment"
+        android:name="ru.malkollm.school_android.AdminFragment"
+        android:label="fragment_admin"
+        tools:layout="@layout/fragment_admin" >
+        <argument
+            android:name="User"
+            app:argType="ru.malkollm.school_android.models.User" />
+    </fragment>
 </navigation>

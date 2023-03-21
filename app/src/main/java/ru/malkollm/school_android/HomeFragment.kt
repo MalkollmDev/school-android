@@ -7,7 +7,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AutoCompleteTextView
 import android.widget.ProgressBar
+import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -15,11 +17,11 @@ import androidx.recyclerview.widget.RecyclerView
 import retrofit2.HttpException
 import ru.malkollm.school_android.api.RetrofitInstance
 import ru.malkollm.school_android.api.ScheduleAdapter
+import ru.malkollm.school_android.models.User
 import java.io.IOException
 
-class HomeFragment(private var groupId: Int) : Fragment() {
+class HomeFragment(private var user: User) : Fragment() {
     private lateinit var scheduleAdapter: ScheduleAdapter
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -34,26 +36,52 @@ class HomeFragment(private var groupId: Int) : Fragment() {
 
         val rvSchedule = requireView().findViewById<RecyclerView>(R.id.rvSchedules)
         val progressBar = requireView().findViewById<ProgressBar>(R.id.progressBarSchedule)
+        val coordinatorSchedule = requireView().findViewById<CoordinatorLayout>(R.id.coordinatorSchedule)
+        val actvGroup = requireView().findViewById<AutoCompleteTextView>(R.id.actvGroup)
 
         setupRecyclerView(rvSchedule)
 
-        lifecycleScope.launchWhenCreated {
-            progressBar.isVisible = true
-            val response = try {
-                RetrofitInstance.apiGroupSchedule.getGroupSchedule(groupId)
-            } catch (e: IOException) {
-                Log.e(ContentValues.TAG, "IOException, you might not have internet connection")
-                progressBar.isVisible = false
-                return@launchWhenCreated
-            } catch (e: HttpException) {
-                Log.e(ContentValues.TAG, "HttpException, unexpected response")
-                progressBar.isVisible = false
-                return@launchWhenCreated
+        if (user.roleId == 1 || user.roleId == 2 || user.roleId == 5 || user.roleId == 6) {
+            lifecycleScope.launchWhenCreated {
+                coordinatorSchedule.visibility = 1
+                progressBar.isVisible = true
+                val response = try {
+                    RetrofitInstance.apiGroupSchedule.getSchedule()
+                } catch (e: IOException) {
+                    Log.e(ContentValues.TAG, "IOException, you might not have internet connection")
+                    progressBar.isVisible = false
+                    return@launchWhenCreated
+                } catch (e: HttpException) {
+                    Log.e(ContentValues.TAG, "HttpException, unexpected response")
+                    progressBar.isVisible = false
+                    return@launchWhenCreated
+                }
+                if (response.isSuccessful && response.body() != null) {
+                    progressBar.isVisible = false
+                    scheduleAdapter.todos = response.body()!!
+                    progressBar.isVisible = false
+                }
             }
-            if (response.isSuccessful && response.body() != null) {
-                progressBar.isVisible = false
-                scheduleAdapter.todos = response.body()!!
-                progressBar.isVisible = false
+        } else {
+            lifecycleScope.launchWhenCreated {
+                coordinatorSchedule.visibility = 0
+                progressBar.isVisible = true
+                val response = try {
+                    RetrofitInstance.apiGroupSchedule.getGroupSchedule(user.groupId)
+                } catch (e: IOException) {
+                    Log.e(ContentValues.TAG, "IOException, you might not have internet connection")
+                    progressBar.isVisible = false
+                    return@launchWhenCreated
+                } catch (e: HttpException) {
+                    Log.e(ContentValues.TAG, "HttpException, unexpected response")
+                    progressBar.isVisible = false
+                    return@launchWhenCreated
+                }
+                if (response.isSuccessful && response.body() != null) {
+                    progressBar.isVisible = false
+                    scheduleAdapter.todos = response.body()!!
+                    progressBar.isVisible = false
+                }
             }
         }
     }

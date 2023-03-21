@@ -60,24 +60,27 @@ class FirstFragment : Fragment() {
             }
             if (response.isSuccessful && response.body() != null) {
                 progressBarLogin.isVisible = false
-                for (user in response.body()!!) {
-                    binding.btnLogin.setOnClickListener {
+
+                binding.btnLogin.setOnClickListener {
+                    for (user in response.body()!!) {
                         if (
                             tvLogin.text.toString().trim() == user.login &&
                             tvPassword.text.toString().trim() == user.password
                         ) {
-                            val bundle = bundleOf("GroupId" to user.groupId)
-                            findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment, bundle)
+                            val bundle = bundleOf("User" to user)
+                            findNavController().navigate(
+                                R.id.action_FirstFragment_to_SecondFragment,
+                                bundle
+                            )
                         } else {
                             Toast.makeText(
                                 activity,
                                 "Ошибка авторизации, проверьте логин и пароль",
                                 Toast.LENGTH_LONG
                             ).show()
-                            tvLogin.text.clear()
+                            tvPassword.text.clear()
                         }
                     }
-
                 }
             }
         }
