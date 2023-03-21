@@ -41,7 +41,6 @@ class HomeworkAdapter : RecyclerView.Adapter<HomeworkAdapter.TodoViewHolder>() {
         holder.binding.apply {
             val todo = todos[position]
             tvNLessonHomework.text = todo.lessonName
-            tvGroupNumber.text = todo.numberGroup.toString()
             tvTextHomework.text = todo.task
             tvDateEnd.text = todo.date
         }

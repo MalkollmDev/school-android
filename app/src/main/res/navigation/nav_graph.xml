@@ -28,6 +28,9 @@
         <argument
             android:name="User"
             app:argType="ru.malkollm.school_android.models.User" />
+        <action
+            android:id="@+id/action_SecondFragment_to_homeworkFragment"
+            app:destination="@id/homeworkFragment" />
     </fragment>
     <fragment
         android:id="@+id/homeFragment"
@@ -57,4 +60,9 @@
             android:name="User"
             app:argType="ru.malkollm.school_android.models.User" />
     </fragment>
+    <fragment
+        android:id="@+id/homeworkFragment"
+        android:name="ru.malkollm.school_android.HomeworkFragment"
+        android:label="fragment_homework"
+        tools:layout="@layout/fragment_homework" />
 </navigation>

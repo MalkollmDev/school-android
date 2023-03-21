@@ -30,7 +30,7 @@ class SecondFragment : Fragment() {
         binding.bottomNavigationView.setOnItemSelectedListener {
             when (it.itemId) {
                 R.id.home -> replaceFragment(HomeFragment(user))
-                R.id.homework -> replaceFragment(HomeworkFragment())
+                R.id.homework -> replaceFragment(HomeworkFragment(user))
 //                R.id.settings -> replaceFragment(SettingsFragment())
 
                 else -> {}

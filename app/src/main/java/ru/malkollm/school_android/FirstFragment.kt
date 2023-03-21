@@ -44,13 +44,6 @@ class FirstFragment : Fragment() {
             val login = tvLogin.text.toString().trim()
             val password = tvPassword.text.toString().trim()
 
-//            val jsonObject = JSONObject()
-//            jsonObject.put("login", login)
-//            jsonObject.put("password", password)
-//
-//            val jsonObjectString = jsonObject.toString()
-//            val requestBody = jsonObjectString.toRequestBody("application/json".toMediaTypeOrNull())
-
             val model = User(
                 email = "",
                 firstName = "",
