@@ -5,12 +5,12 @@
     android:layout_height="wrap_content"
     android:layout_margin="8dp"
     android:elevation="0dp"
-    app:cardCornerRadius="8dp">
+    app:cardCornerRadius="20dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/purple"
+        android:background="@color/gray"
         android:padding="5dp">
 
         <TextView
@@ -44,8 +44,8 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:layout_marginTop="8dp"
-            android:text="Выучить Библию наизусть"
-            android:textSize="17sp"
+            android:text="Иванов Иван Иванович"
+            android:textSize="15sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/tvNumber"
             app:layout_constraintTop_toBottomOf="@+id/tvNameLesson"
@@ -58,7 +58,7 @@
             android:layout_marginStart="20dp"
             android:layout_marginTop="8dp"
             android:text="08:00-08:45"
-            android:textSize="15sp"
+            android:textSize="17sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/tvNumber"
             app:layout_constraintTop_toBottomOf="@+id/tvTeacher"
