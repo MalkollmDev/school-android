@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import ru.malkollm.school_android.databinding.ItemHomeworkBinding
 import ru.malkollm.school_android.models.Homework
+import java.text.SimpleDateFormat
 
 class HomeworkAdapter : RecyclerView.Adapter<HomeworkAdapter.HomeworkViewHolder>() {
     inner class HomeworkViewHolder(val binding: ItemHomeworkBinding) : RecyclerView.ViewHolder(binding.root)
@@ -37,11 +38,12 @@ class HomeworkAdapter : RecyclerView.Adapter<HomeworkAdapter.HomeworkViewHolder>
     }
 
     override fun onBindViewHolder(holder: HomeworkViewHolder, position: Int) {
+        val formatter = SimpleDateFormat("dd-MM-yyyy")
         holder.binding.apply {
             val todo = todos[position]
             tvNLessonHomework.text = todo.lessonName
             tvTextHomework.text = todo.task
-            tvDateEnd.text = todo.date
+            tvDateEnd.text = todo.date.substringBefore(delimiter = "T")
         }
     }
 }

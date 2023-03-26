@@ -9,6 +9,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@drawable/custom_action_bar"
         android:orientation="vertical">
 
         <androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -28,6 +29,7 @@
                 <AutoCompleteTextView
                     android:id="@+id/actvLessonHomework"
                     android:layout_width="match_parent"
+                    android:textColor="#fff"
                     android:layout_height="match_parent"
                     android:inputType="none" />
             </com.google.android.material.textfield.TextInputLayout>
@@ -37,6 +39,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="@drawable/custom_recycler_view"
             android:padding="6dp">
 
             <androidx.recyclerview.widget.RecyclerView

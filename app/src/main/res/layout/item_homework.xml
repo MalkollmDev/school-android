@@ -5,23 +5,23 @@
     android:layout_height="wrap_content"
     android:layout_margin="8dp"
     android:elevation="0dp"
-    app:cardCornerRadius="8dp">
+    app:cardCornerRadius="20dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/purple"
+        android:background="@color/gray"
         android:padding="5dp">
 
         <TextView
             android:id="@+id/tvNLessonHomework"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
             android:layout_marginTop="4dp"
             android:text="Алгебра"
             android:textSize="22sp"
             android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -29,30 +29,39 @@
             android:id="@+id/tvTextHomework"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="20dp"
             android:lines="2"
             android:maxLines="4"
-            android:textAlignment="center"
             android:text="Прочитать параграф 20"
             android:textSize="17sp"
-            android:layout_marginTop="15dp"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvNLessonHomework"
-            app:layout_constraintVertical_bias="0.0" />
+            app:layout_constraintTop_toBottomOf="@+id/tvNLessonHomework" />
+
+        <TextView
+            android:id="@+id/tvDateEndInfo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="Выполнить до:"
+            android:layout_marginStart="20dp"
+            android:textSize="15sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvTextHomework" />
 
         <TextView
             android:id="@+id/tvDateEnd"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:text="Выполнить до 20.03.2023"
-            android:textSize="15sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvTextHomework"
-            app:layout_constraintVertical_bias="0.5" />
+            android:textStyle="bold"
+            android:text="20.03.2023"
+            android:layout_marginStart="20dp"
+            android:textSize="17sp"
+            app:layout_constraintStart_toEndOf="@+id/tvDateEndInfo"
+            app:layout_constraintTop_toBottomOf="@+id/tvTextHomework" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

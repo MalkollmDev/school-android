@@ -88,7 +88,7 @@ class HomeworkFragment(private var user: User) : Fragment() {
                         val response1 =
                             RetrofitInstance.apiHomework.getHomeworks(
                                 user.groupId,
-                                lessons[p2].id
+                                lessons[p2].id-1
                             )
 
                         withContext(Dispatchers.Main) {
