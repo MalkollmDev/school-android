@@ -11,4 +11,9 @@ interface HomeworkApi {
         @Path("groupId") groupId: Int,
         @Path("lessonId") lessonId: Int
     ): Response<List<Homework>>
+
+    @GET("Homeworks/GetHomeworkByGroup/{groupId}")
+    suspend fun getHomeworksByGroup(
+        @Path("groupId") groupId: Int
+    ): Response<List<Homework>>
 }

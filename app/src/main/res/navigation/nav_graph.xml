@@ -59,10 +59,18 @@
         <argument
             android:name="User"
             app:argType="ru.malkollm.school_android.models.User" />
+        <action
+            android:id="@+id/action_adminFragment_to_addHomeworkFragment"
+            app:destination="@id/addHomeworkFragment" />
     </fragment>
     <fragment
         android:id="@+id/homeworkFragment"
         android:name="ru.malkollm.school_android.HomeworkFragment"
         android:label="fragment_homework"
         tools:layout="@layout/fragment_homework" />
+    <fragment
+        android:id="@+id/addHomeworkFragment"
+        android:name="ru.malkollm.school_android.AddHomeworkFragment"
+        android:label="fragment_add_homework"
+        tools:layout="@layout/fragment_add_homework" />
 </navigation>

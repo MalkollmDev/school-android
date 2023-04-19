@@ -73,10 +73,14 @@ class FirstFragment : Fragment() {
                     val user = response.body()!!
                     if (user.isNotEmpty()) {
                         val bundle = bundleOf("User" to user[0])
-                        findNavController().navigate(
-                            R.id.action_FirstFragment_to_SecondFragment,
-                            bundle
+                        val roleList = listOf(
+                            1, 2, 5, 6, 7
                         )
+                        if (user[0].roleId in roleList) {
+                            goToFragment(R.id.action_FirstFragment_to_adminFragment, bundle)
+                        } else {
+                            goToFragment(R.id.action_FirstFragment_to_SecondFragment, bundle)
+                        }
                     } else {
                         Toast.makeText(
                             activity,
@@ -88,6 +92,13 @@ class FirstFragment : Fragment() {
                 }
             }
         }
+    }
+
+    private fun goToFragment(fragment: Int, bundle: Bundle) {
+        findNavController().navigate(
+            fragment,
+            bundle
+        )
     }
 
     override fun onDestroyView() {

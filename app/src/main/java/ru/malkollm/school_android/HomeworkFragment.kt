@@ -42,14 +42,16 @@ class HomeworkFragment(private var user: User) : Fragment() {
 
         val rvHomework = requireView().findViewById<RecyclerView>(R.id.rvHomework)
         val progressBarHomework = requireView().findViewById<ProgressBar>(R.id.progressBarHomework)
-        val actvLessonHomework =
-            requireView().findViewById<AutoCompleteTextView>(R.id.actvLessonHomework)
+//        val actvLessonHomework =
+//            requireView().findViewById<AutoCompleteTextView>(R.id.actvLessonHomework)
 
         setupRecyclerView(rvHomework)
 
         lifecycleScope.launchWhenCreated {
-            val response = try {
-                RetrofitInstance.apiGroupSchedule.getGroupSchedule(user.groupId)
+            val resp = try {
+                RetrofitInstance.apiHomework.getHomeworksByGroup(
+                    user.groupId
+                )
             } catch (e: IOException) {
                 Log.e(ContentValues.TAG, "IOException, you might not have internet connection")
                 return@launchWhenCreated
@@ -57,52 +59,70 @@ class HomeworkFragment(private var user: User) : Fragment() {
                 Log.e(ContentValues.TAG, "HttpException, unexpected response")
                 return@launchWhenCreated
             }
-            if (response.isSuccessful && response.body() != null) {
-                val lessonList: ArrayList<String> = arrayListOf()
-                lessons = (response.body() as ArrayList<Lesson>?)!!
-                for (lesson in lessons) {
-                    lessonList.add(lesson.lessonName)
-                }
-
-                val arrayAdapter = ArrayAdapter(
-                    requireContext(),
-                    R.layout.dropdown_lessons_item,
-                    lessonList
-                )
-                actvLessonHomework.setAdapter(arrayAdapter)
-            }
-
-            actvLessonHomework.onItemClickListener = object : AdapterView.OnItemSelectedListener,
-                AdapterView.OnItemClickListener {
-                override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-                    TODO("Not yet implemented")
-                }
-
-                override fun onNothingSelected(p0: AdapterView<*>?) {
-                    TODO("Not yet implemented")
-                }
-
-                override fun onItemClick(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-                    CoroutineScope(Dispatchers.IO).launch {
-
-                        val response1 =
-                            RetrofitInstance.apiHomework.getHomeworks(
-                                user.groupId,
-                                lessons[p2].id-1
-                            )
-
-                        withContext(Dispatchers.Main) {
-                            if (response1.isSuccessful) {
-                                homeworkAdapter.todos = response1.body()!!
-                                progressBarHomework.isVisible = false
-                            } else {
-                                Log.e("RETROFIT_ERROR", response.code().toString())
-                            }
-                        }
-                    }
-                }
+            if (resp.isSuccessful && resp.body() != null) {
+                homeworkAdapter.todos = resp.body()!!
+                progressBarHomework.isVisible = false
+            } else {
+                Log.e("RETROFIT_ERROR", resp.code().toString())
             }
         }
+
+//        lifecycleScope.launchWhenCreated {
+//            val response = try {
+//                RetrofitInstance.apiGroupSchedule.getGroupSchedule(user.groupId)
+//            } catch (e: IOException) {
+//                Log.e(ContentValues.TAG, "IOException, you might not have internet connection")
+//                return@launchWhenCreated
+//            } catch (e: HttpException) {
+//                Log.e(ContentValues.TAG, "HttpException, unexpected response")
+//                return@launchWhenCreated
+//            }
+//            if (response.isSuccessful && response.body() != null) {
+//                val lessonList: ArrayList<String> = arrayListOf()
+//                lessons = (response.body() as ArrayList<Lesson>?)!!
+//                for (lesson in lessons) {
+//                    lessonList.add(lesson.lessonName)
+//                }
+//
+//                val arrayAdapter = ArrayAdapter(
+//                    requireContext(),
+//                    R.layout.dropdown_lessons_item,
+//                    lessonList
+//                )
+//                actvLessonHomework.setAdapter(arrayAdapter)
+//            }
+//
+//            actvLessonHomework.onItemClickListener = object : AdapterView.OnItemSelectedListener,
+//                AdapterView.OnItemClickListener {
+//                override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+//                    TODO("Not yet implemented")
+//                }
+//
+//                override fun onNothingSelected(p0: AdapterView<*>?) {
+//                    TODO("Not yet implemented")
+//                }
+//
+//                override fun onItemClick(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+//                    CoroutineScope(Dispatchers.IO).launch {
+//
+//                        val response1 =
+//                            RetrofitInstance.apiHomework.getHomeworks(
+//                                user.groupId,
+//                                lessons[p2].id - 1
+//                            )
+//
+//                        withContext(Dispatchers.Main) {
+//                            if (response1.isSuccessful) {
+//                                homeworkAdapter.todos = response1.body()!!
+//                                progressBarHomework.isVisible = false
+//                            } else {
+//                                Log.e("RETROFIT_ERROR", response.code().toString())
+//                            }
+//                        }
+//                    }
+//                }
+//            }
+//        }
     }
 
     private fun setupRecyclerView(rvHomework: RecyclerView) = rvHomework.apply {
