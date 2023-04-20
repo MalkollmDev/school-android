@@ -23,18 +23,11 @@ import retrofit2.HttpException
 import ru.malkollm.school_android.api.RetrofitInstance
 import ru.malkollm.school_android.api.ScheduleAdapter
 import ru.malkollm.school_android.models.Group
+import ru.malkollm.school_android.models.User
 import java.io.IOException
 
-class AdminFragment : Fragment() {
+class AdminFragment(private var user: User) : Fragment() {
     private lateinit var scheduleAdapter: ScheduleAdapter
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-//        arguments?.let {
-//            param1 = it.getString(ARG_PARAM1)
-//            param2 = it.getString(ARG_PARAM2)
-//        }
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

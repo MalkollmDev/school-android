@@ -14,8 +14,8 @@
             android:id="@+id/action_FirstFragment_to_SecondFragment"
             app:destination="@id/SecondFragment" />
         <action
-            android:id="@+id/action_FirstFragment_to_adminFragment"
-            app:destination="@id/adminFragment" />
+            android:id="@+id/action_FirstFragment_to_adminNavFragment"
+            app:destination="@id/adminNavFragment" />
     </fragment>
     <fragment
         android:id="@+id/SecondFragment"
@@ -73,4 +73,15 @@
         android:name="ru.malkollm.school_android.AddHomeworkFragment"
         android:label="fragment_add_homework"
         tools:layout="@layout/fragment_add_homework" />
+    <fragment
+        android:id="@+id/adminNavFragment"
+        android:name="ru.malkollm.school_android.AdminNavFragment"
+        android:label="AdminNavFragment" >
+        <argument
+            android:name="User"
+            app:argType="ru.malkollm.school_android.models.User" />
+        <action
+            android:id="@+id/action_adminNavFragment_to_adminFragment"
+            app:destination="@id/adminFragment" />
+    </fragment>
 </navigation>

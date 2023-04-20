@@ -1,16 +1,17 @@
 package ru.malkollm.school_android
 
 import android.os.Bundle
+import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
+import ru.malkollm.school_android.databinding.FragmentAdminNavBinding
 import ru.malkollm.school_android.databinding.FragmentSecondBinding
 import ru.malkollm.school_android.models.User
 
-class SecondFragment : Fragment() {
-    private var _binding: FragmentSecondBinding? = null
+class AdminNavFragment : Fragment() {
+    private var _binding: FragmentAdminNavBinding? = null
     private val binding get() = _binding!!
     private lateinit var user: User
 
@@ -18,18 +19,18 @@ class SecondFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentSecondBinding.inflate(inflater, container, false)
+        _binding = FragmentAdminNavBinding.inflate(inflater, container, false)
 
         arguments?.let { bundle ->
             user = bundle.getParcelable("User")!!
         }
 
-        replaceFragment(HomeFragment(user))
+        replaceFragment(AdminFragment(user))
 
         binding.bottomNavigationView.setOnItemSelectedListener {
             when (it.itemId) {
-                R.id.home -> replaceFragment(HomeFragment(user))
-                R.id.homework -> replaceFragment(HomeworkFragment(user))
+                R.id.home -> replaceFragment(AdminFragment(user))
+                R.id.homework -> replaceFragment(AddHomeworkFragment(user))
 //                R.id.settings -> replaceFragment(SettingsFragment())
 
                 else -> {}

@@ -77,7 +77,7 @@ class FirstFragment : Fragment() {
                             1, 2, 5, 6, 7
                         )
                         if (user[0].roleId in roleList) {
-                            goToFragment(R.id.action_FirstFragment_to_adminFragment, bundle)
+                            goToFragment(R.id.action_FirstFragment_to_adminNavFragment, bundle)
                         } else {
                             goToFragment(R.id.action_FirstFragment_to_SecondFragment, bundle)
                         }
