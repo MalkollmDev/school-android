@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".AboutFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp">
+
+        <TextView
+            android:id="@+id/aboutAppTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:text="АБВ\n«Академия Больших Возможностей»"
+            android:textAppearance="@style/TextAbout"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/aboutVersionTitleTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:text="Версия приложения"
+            android:textAppearance="@style/TextPrimaryTitle"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/aboutAppTextView" />
+
+        <TextView
+            android:id="@+id/aboutVersionTextView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:gravity="end"
+            android:text="1.1"
+            android:textAppearance="@style/TextPrimaryTitle"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/aboutVersionTitleTextView"
+            app:layout_constraintTop_toTopOf="@id/aboutVersionTitleTextView"
+            tools:text="1.0" />
+
+        <TextView
+            android:id="@+id/aboutDeveloperTitleTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Разработчик"
+            android:textAppearance="@style/TextPrimaryTitle"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/aboutVersionTitleTextView" />
+
+        <TextView
+            android:id="@+id/aboutDeveloperTextView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:gravity="end"
+            android:text="Фаткуллин Марсель"
+            android:textAppearance="@style/TextPrimaryTitle"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/aboutDeveloperTitleTextView"
+            app:layout_constraintTop_toTopOf="@id/aboutDeveloperTitleTextView" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

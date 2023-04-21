@@ -33,7 +33,6 @@ class AdminFragment(private var user: User) : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_admin, container, false)
     }
 
@@ -60,6 +59,7 @@ class AdminFragment(private var user: User) : Fragment() {
                 return@launchWhenCreated
             }
             if (response.isSuccessful && response.body() != null) {
+                progressBar.isVisible = false
                 val groupsNumberList: ArrayList<Int> = arrayListOf()
                 var groupsNumber: ArrayList<Group> = arrayListOf()
                 groupsNumber = (response.body() as ArrayList<Group>?)!!

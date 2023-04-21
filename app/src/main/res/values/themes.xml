@@ -20,4 +20,13 @@
     <style name="Theme.Schoolandroid.AppBarOverlay"
         parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
     <style name="Theme.Schoolandroid.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+    <style name="TextAbout" parent="TextAppearance.AppCompat">
+        <item name="android:textSize">24sp</item>
+        <item name="android:textColor">@color/primaryColor</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+    <style name="TextPrimaryTitle" parent="TextAppearance.AppCompat">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">@color/foregroundPrimary</item>
+    </style>
 </resources>

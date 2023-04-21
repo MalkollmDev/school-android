@@ -36,4 +36,12 @@ object RetrofitInstance {
             .build()
             .create(UserApi::class.java)
     }
+
+    val apiLesson: LessonApi by lazy {
+        Retrofit.Builder()
+            .baseUrl("http://api.malkollm.ru/")
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+            .create(LessonApi::class.java)
+    }
 }

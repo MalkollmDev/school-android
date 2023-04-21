@@ -10,4 +10,6 @@
     <color name="purple">#C8B8E4</color>
     <color name="lavender">#8692f7</color>
     <color name="gray">#F6F6F6</color>
+    <color name="primaryColor">#0073bb</color>
+    <color name="foregroundPrimary">@color/black</color>
 </resources>
