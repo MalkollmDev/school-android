@@ -11,15 +11,13 @@ import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import android.widget.Button
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.lifecycleScope
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import retrofit2.HttpException
 import ru.malkollm.school_android.api.RetrofitInstance
 import ru.malkollm.school_android.databinding.FragmentAddHomeworkBinding
 import ru.malkollm.school_android.models.Group
+import ru.malkollm.school_android.models.HomeworkDto
 import ru.malkollm.school_android.models.LessonDto
 import java.io.IOException
 
@@ -27,6 +25,8 @@ class AddHomeworkFragment() : Fragment() {
     private var _binding: FragmentAddHomeworkBinding? = null
     private val binding get() = _binding!!
     private var date: String = ""
+    private var groupId: Int = 0
+    private var lessonId: Int = 0
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -81,18 +81,7 @@ class AddHomeworkFragment() : Fragment() {
                     }
 
                     override fun onItemClick(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-                        CoroutineScope(Dispatchers.IO).launch {
-                            val response1 =
-                                RetrofitInstance.apiGroupSchedule.getGroupSchedule(groupsNumber[p2].id)
-
-                            withContext(Dispatchers.Main) {
-                                if (response1.isSuccessful) {
-//                                    scheduleAdapter.todos = response1.body()!!
-                                } else {
-                                    Log.e("RETROFIT_ERROR", response.code().toString())
-                                }
-                            }
-                        }
+                        groupId = groupsNumber[p2].id
                     }
                 }
             }
@@ -131,18 +120,7 @@ class AddHomeworkFragment() : Fragment() {
                     }
 
                     override fun onItemClick(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-                        CoroutineScope(Dispatchers.IO).launch {
-                            val response1 =
-                                RetrofitInstance.apiGroupSchedule.getGroupSchedule(lessons[p2].id)
-
-                            withContext(Dispatchers.Main) {
-                                if (response1.isSuccessful) {
-//                                    scheduleAdapter.todos = response1.body()!!
-                                } else {
-                                    Log.e("RETROFIT_ERROR", response.code().toString())
-                                }
-                            }
-                        }
+                        lessonId = lessons[p2].id
                     }
                 }
             }
@@ -157,65 +135,38 @@ class AddHomeworkFragment() : Fragment() {
         binding.tvDateAdded.text = date
         binding.tvDateAdded.visibility = 1
 
-//        binding.btnLogin.setOnClickListener {
-//            val login = tvLogin.text.toString().trim()
-//            val password = tvPassword.text.toString().trim()
-//
-//            val model = User(
-//                email = "",
-//                firstName = "",
-//                groupId = 0,
-//                id = 0,
-//                lastName = "",
-//                login = login,
-//                middleName = "",
-//                password = password,
-//                phone = "",
-//                roleId = 0
-//            )
-//
-//            lifecycleScope.launchWhenCreated {
-//                progressBarLogin.isVisible = true
-//                val response = try {
-//                    RetrofitInstance.apiUser.checkUser(model)
-//                } catch (e: IOException) {
-//                    Log.e(ContentValues.TAG, "IOException, you might not have internet connection")
-//                    progressBarLogin.isVisible = false
-//                    return@launchWhenCreated
-//                } catch (e: HttpException) {
-//                    Log.e(ContentValues.TAG, "HttpException, unexpected response")
-//                    progressBarLogin.isVisible = false
-//                    return@launchWhenCreated
-//                }
-//                if (response.isSuccessful && response.body() != null) {
-//                    progressBarLogin.isVisible = false
-//
-//                    val user = response.body()!!
-//                    if (user.isNotEmpty()) {
-//                        val bundle = bundleOf("User" to user[0])
-//                        val roleList = listOf(
-//                            1, 2, 5, 6, 7
-//                        )
-//                        if (user[0].roleId in roleList) {
-//                            goToFragment(R.id.action_FirstFragment_to_adminNavFragment, bundle)
-//                        } else {
-//                            goToFragment(R.id.action_FirstFragment_to_SecondFragment, bundle)
-//                        }
-//                    } else {
-//                        Toast.makeText(
-//                            activity,
-//                            "Ошибка авторизации, проверьте логин и пароль",
-//                            Toast.LENGTH_LONG
-//                        ).show()
-//                        tvPassword.text.clear()
-//                    }
-//                }
-//            }
-//        }
+        val text = binding.etAdminHomework.text
+        val resultDate = date + "T00:00:00"
+        binding.btnSendHomework.setOnClickListener {
+            val model = HomeworkDto(
+                text = text.toString(),
+                date = resultDate,
+                lessonId = lessonId,
+                groupId = groupId
+            )
+
+            lifecycleScope.launchWhenCreated {
+                val response = try {
+                    RetrofitInstance.apiHomework.addHomework(model)
+                } catch (e: IOException) {
+                    Log.e(ContentValues.TAG, "IOException, you might not have internet connection")
+                    return@launchWhenCreated
+                } catch (e: HttpException) {
+                    Log.e(ContentValues.TAG, "HttpException, unexpected response")
+                    return@launchWhenCreated
+                }
+                if (response.isSuccessful && response.body() != null) {
+                    replaceFragment(AddHomeworkFragment())
+                }
+            }
+        }
     }
 
-    private fun goToFragment(fragment: Int) {
-
+    private fun replaceFragment(fragment: Fragment) {
+        val fragmentManager = (activity as FragmentActivity).supportFragmentManager
+        val fragmentTransaction = fragmentManager.beginTransaction()
+        fragmentTransaction.replace(R.id.frame_layout, fragment)
+        fragmentTransaction.commit()
     }
 
     override fun onDestroyView() {

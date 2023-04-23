@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout
+    android:id="@+id/container"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -14,6 +16,33 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
+
+            <Button
+                android:id="@+id/btnAdminDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Выбрать дату"
+                android:layout_gravity="center" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="16dp"
+                android:text="Выполнить до:"
+                android:textSize="16sp"/>
+
+            <TextView
+                android:id="@+id/tvDateAdded"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="16dp"
+                android:text="2023-04-23"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:visibility="invisible" />
 
             <androidx.coordinatorlayout.widget.CoordinatorLayout
                 android:id="@+id/coordAdminGroup"
@@ -57,24 +86,6 @@
                         android:inputType="none" />
                 </com.google.android.material.textfield.TextInputLayout>
             </androidx.coordinatorlayout.widget.CoordinatorLayout>
-
-            <Button
-                android:id="@+id/btnAdminDate"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Выбрать дату"
-                android:layout_gravity="center" />
-
-            <TextView
-                android:id="@+id/tvDateAdded"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="2023-04-23"
-                android:layout_gravity="center"
-                android:layout_marginTop="16dp"
-                android:textStyle="bold"
-                android:textSize="16sp"
-                android:visibility="invisible" />
 
             <EditText
                 android:id="@+id/etAdminHomework"
