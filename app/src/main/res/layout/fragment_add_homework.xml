@@ -65,6 +65,17 @@
                 android:text="Выбрать дату"
                 android:layout_gravity="center" />
 
+            <TextView
+                android:id="@+id/tvDateAdded"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="2023-04-23"
+                android:layout_gravity="center"
+                android:layout_marginTop="16dp"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:visibility="invisible" />
+
             <EditText
                 android:id="@+id/etAdminHomework"
                 android:layout_width="match_parent"
@@ -76,6 +87,13 @@
                 android:inputType="textMultiLine"
                 android:lines="4" />
 
+            <Button
+                android:id="@+id/btnSendHomework"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Сохранить"
+                android:layout_gravity="center" />
         </LinearLayout>
     </ScrollView>
 </FrameLayout>

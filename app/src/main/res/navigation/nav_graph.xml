@@ -72,7 +72,14 @@
         android:id="@+id/addHomeworkFragment"
         android:name="ru.malkollm.school_android.AddHomeworkFragment"
         android:label="fragment_add_homework"
-        tools:layout="@layout/fragment_add_homework" />
+        tools:layout="@layout/fragment_add_homework" >
+        <action
+            android:id="@+id/action_addHomeworkFragment_to_dateModalFragment"
+            app:destination="@id/dateModalFragment" />
+        <argument
+            android:name="date"
+            app:argType="string" />
+    </fragment>
     <fragment
         android:id="@+id/adminNavFragment"
         android:name="ru.malkollm.school_android.AdminNavFragment"
@@ -83,5 +90,15 @@
         <action
             android:id="@+id/action_adminNavFragment_to_adminFragment"
             app:destination="@id/adminFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/dateModalFragment"
+        android:name="ru.malkollm.school_android.DateModalFragment"
+        android:label="fragment_date_modal"
+        tools:layout="@layout/fragment_date_modal" >
+        <action
+            android:id="@+id/action_dateModalFragment_to_addHomeworkFragment"
+            app:popUpTo="@id/addHomeworkFragment"
+            app:destination="@id/addHomeworkFragment" />
     </fragment>
 </navigation>

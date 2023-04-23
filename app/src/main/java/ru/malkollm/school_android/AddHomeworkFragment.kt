@@ -3,15 +3,15 @@ package ru.malkollm.school_android
 import android.content.ContentValues
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
+import android.widget.Button
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
-import kotlinx.android.synthetic.main.fragment_add_homework.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -20,21 +20,22 @@ import retrofit2.HttpException
 import ru.malkollm.school_android.api.RetrofitInstance
 import ru.malkollm.school_android.databinding.FragmentAddHomeworkBinding
 import ru.malkollm.school_android.models.Group
-import ru.malkollm.school_android.models.Lesson
 import ru.malkollm.school_android.models.LessonDto
-import ru.malkollm.school_android.models.User
 import java.io.IOException
 
-class AddHomeworkFragment(private var user: User) : Fragment() {
+class AddHomeworkFragment() : Fragment() {
     private var _binding: FragmentAddHomeworkBinding? = null
     private val binding get() = _binding!!
+    private var date: String = ""
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        // Inflate the layout for this fragment
         _binding = FragmentAddHomeworkBinding.inflate(inflater, container, false)
+
+        date = arguments?.getString("date").toString()
+
         return binding.root
     }
 
@@ -43,11 +44,9 @@ class AddHomeworkFragment(private var user: User) : Fragment() {
 
         val actvAdminGroup = requireView().findViewById<AutoCompleteTextView>(R.id.actvAdminGroup)
         val actvAdminLesson = requireView().findViewById<AutoCompleteTextView>(R.id.actvAdminLesson)
-        val btnAdminDate = requireView().findViewById<AutoCompleteTextView>(R.id.btnAdminDate)
+        val btnAdminDate = requireView().findViewById<Button>(R.id.btnAdminDate)
 
-//        val tvLogin = binding.
-//        val tvPassword = binding.tvPassword
-//        val progressBarLogin = binding.progressBarLogin
+        val dateModalFragment = DateModalFragment()
 
         lifecycleScope.launchWhenCreated {
             val response = try {
@@ -149,9 +148,14 @@ class AddHomeworkFragment(private var user: User) : Fragment() {
             }
         }
 
-        btnAdminDate.setOnClickListener{
-
+        btnAdminDate.setOnClickListener {
+            binding.btnAdminDate.setOnClickListener {
+                dateModalFragment.show(fragmentManager!!, "DateModalFragment")
+            }
         }
+
+        binding.tvDateAdded.text = date
+        binding.tvDateAdded.visibility = 1
 
 //        binding.btnLogin.setOnClickListener {
 //            val login = tvLogin.text.toString().trim()
@@ -208,6 +212,10 @@ class AddHomeworkFragment(private var user: User) : Fragment() {
 //                }
 //            }
 //        }
+    }
+
+    private fun goToFragment(fragment: Int) {
+
     }
 
     override fun onDestroyView() {

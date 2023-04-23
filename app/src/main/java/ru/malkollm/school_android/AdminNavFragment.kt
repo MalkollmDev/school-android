@@ -30,7 +30,7 @@ class AdminNavFragment : Fragment() {
         binding.bottomNavigationView.setOnItemSelectedListener {
             when (it.itemId) {
                 R.id.home -> replaceFragment(AdminFragment(user))
-                R.id.homework -> replaceFragment(AddHomeworkFragment(user))
+                R.id.homework -> replaceFragment(AddHomeworkFragment())
 //                R.id.settings -> replaceFragment(SettingsFragment())
 
                 else -> {}
